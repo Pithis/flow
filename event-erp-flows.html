@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Event Management ERP – Business Process Flows</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:14px/1.45 "Segoe UI",system-ui,sans-serif;background:#f1f3f6;color:#1e293b;height:100vh;display:flex;flex-direction:column}
+header{background:#fff;border-bottom:1px solid #d5dae1;padding:10px 20px;display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center}
+header h1{font-size:18px;margin:0}header p{margin:0;color:#64748b;font-size:12px}
+.lg{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}.lg span{font-size:11px;padding:2px 8px;border-radius:10px;border:1.5px solid var(--bd);background:var(--bg)}
+main{flex:1;display:flex;min-height:0}nav{width:250px;background:#fff;border-right:1px solid #d5dae1;padding:10px;overflow:auto;flex:none}
+nav button{display:block;width:100%;text-align:left;padding:9px 11px;margin-bottom:4px;border:1px solid transparent;background:none;border-radius:8px;font:inherit;cursor:pointer;color:#334155}
+nav button:hover{background:#f1f3f6}nav button.on{background:#1e3a5f;color:#fff}
+#area{flex:1;overflow:auto;padding:20px 24px}
+h2{margin:0 0 2px;font-size:20px}.sub{color:#64748b;margin:0 0 14px}
+.emp{--bg:#e3effd;--bd:#2f6fd6}.dh{--bg:#e5f5e8;--bd:#2f9e4f}.adm{--bg:#fde8ea;--bd:#d64550}.acc{--bg:#efe6fb;--bd:#7e4fc7}.cli{--bg:#dff6f9;--bd:#0aa3b8}.ven{--bg:#fff0dd;--bd:#e08a1e}.ren{--bg:#f3eafc;--bd:#9a62d6}.sys{--bg:#eceff3;--bd:#64748b}
+.scr{overflow-x:auto;background:#fff;border:1px solid #d5dae1;border-radius:12px;margin-bottom:16px}
+.sw{position:relative}.sw svg{position:absolute;left:0;top:0;pointer-events:none}
+.stg{position:absolute;top:0;height:26px;font-size:11px;font-weight:600;text-align:center;line-height:26px;color:#fff;border-left:2px solid #fff;white-space:nowrap;overflow:hidden}
+.lane{position:absolute;left:0;right:0;border-top:1px solid #d5dae1;background:color-mix(in srgb,var(--bg) 40%,#fff)}
+.lane b{position:absolute;left:0;top:0;bottom:0;width:112px;padding:8px;font-size:12px;background:var(--bg);border-right:2px solid var(--bd);display:flex;align-items:center}
+.bx{position:absolute;width:128px;height:60px;background:var(--bg);border:2px solid var(--bd);border-radius:9px;padding:4px 6px;display:flex;flex-direction:column;justify-content:center;text-align:center;font-size:11.5px;line-height:1.2;z-index:1}
+.bx small{font-size:10px;color:#475569;margin-top:2px}.bx.k{font-weight:700;box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--bd)}
+.bx.d{border:0;background:var(--bd);border-radius:0;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);padding:0;height:64px;margin-top:-2px}
+.bx.d i{position:absolute;inset:2px;background:var(--bg);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-bottom:16px}
+.cd,.pn{background:#fff;border:1px solid #d5dae1;border-radius:12px;padding:12px 14px}.pn{margin-bottom:16px}
+.cd h4,.pn h3{margin:0 0 6px;font-size:14px}.cd ul{margin:0;padding-left:18px}.cd li{margin:1px 0}
+.cd.f{border-left:5px solid var(--bd);background:color-mix(in srgb,var(--bg) 50%,#fff)}
+.callout{background:#fff7e0;border:1px solid #f0c85a;border-radius:8px;padding:8px 12px;margin:10px 0;font-size:13px}
+.ch{display:flex;flex-direction:column;align-items:center}.n{border:2px solid var(--bd,#64748b);background:var(--bg,#fff);border-radius:9px;padding:6px 12px;text-align:center;min-width:170px;max-width:340px}
+.n small{display:block;color:#475569;font-size:11.5px}.n.ok{--bg:#e2f6e8;--bd:#2f9e4f;font-weight:700}
+.ln{width:2px;height:16px;background:#64748b;position:relative;margin:0 auto}.ln::after{content:"";position:absolute;bottom:-1px;left:-4px;border:5px solid transparent;border-top:7px solid #64748b;border-bottom:0}
+.fk,.mg{display:flex;position:relative;width:100%;max-width:560px}.fk{padding-top:16px}.mg{padding-bottom:16px}
+.fk>div,.mg>div{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;padding:0 8px}
+.fk::before,.mg::before{content:"";position:absolute;left:25%;right:25%;border-top:2px solid #64748b}.fk::before{top:0}.mg::before{bottom:0}
+.fk>div::before{content:"";position:absolute;top:-16px;height:16px;border-left:2px solid #64748b}.mg>div::after{content:"";position:absolute;bottom:-16px;height:16px;border-left:2px solid #64748b}
+.row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center}.row .ar{color:#64748b;font-weight:700}
+.tabs{display:flex;gap:6px;margin-bottom:10px}.tabs button{padding:6px 16px;border:1px solid #cbd2db;background:#fff;border-radius:18px;cursor:pointer;font:inherit}.tabs button.on{background:#1e3a5f;color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}.chips div{background:#fff;border:1px solid #d5dae1;border-radius:10px;padding:6px 12px;font-size:12px}.chips b{font-size:18px;display:block}
+table{border-collapse:collapse;width:100%;background:#fff;font-size:12.5px}th,td{border:1px solid #d5dae1;padding:6px 8px;text-align:left}th{background:#eef1f5}
+.bd{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;font-weight:600;background:#e2e8f0}.bd.g{background:#d7f3de;color:#17703a}.bd.r{background:#fddde0;color:#a02330}.bd.y{background:#fff0c2;color:#7a5a00}.bd.b{background:#d9e8fc;color:#1f55a8}.bd.p{background:#eadcfb;color:#5b2fa0}
+.tw{overflow-x:auto}body{counter-reset:r}.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:8px}.rules div{counter-increment:r;background:#fff;border:1px solid #d5dae1;border-radius:9px;padding:8px 10px 8px 42px;position:relative}.rules div::before{content:counter(r);position:absolute;left:10px;top:8px;width:22px;height:22px;border-radius:50%;background:#1e3a5f;color:#fff;text-align:center;font-size:12px;line-height:22px}
+.rules .key{border-color:#d64550;background:#fff5f6}
+@media(max-width:800px){main{flex-direction:column}nav{width:auto;display:flex;gap:4px;overflow-x:auto;border-right:0;border-bottom:1px solid #d5dae1}nav button{white-space:nowrap;width:auto}.lg{margin-left:0}}
+</style></head><body>
+<header><div><h1>Event Management ERP</h1><p>Complete Business Process Flows</p></div>
+<div class="lg"><span class="adm">Admin</span><span class="acc">Accountant</span><span class="dh">Department Head</span><span class="emp">Employee</span><span class="cli">Client</span><span class="ven">Vendor</span><span class="ren">Rental Provider</span></div></header>
+<main><nav id="nav"></nav><div id="area"></div></main>
+<script>
+const CW=150,RH=100,LW=112,BW=128,BH=60,$=s=>document.querySelector(s);
+const N=(t,c='',s='')=>`<div class="n ${c}">${t}${s?`<small>${s}</small>`:''}</div>`,LN='<div class="ln"></div>';
+const fk=(a,b)=>`<div class="fk"><div>${a}</div><div>${b}</div></div>`,mg=(a,b)=>`<div class="mg"><div>${a}</div><div>${b}</div></div>`;
+const cards=a=>`<div class="grid">${a.map(([t,l,c])=>`<div class="cd ${c?'f '+c:''}"><h4>${t}</h4><ul>${l.map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('')}</div>`;
+const head=(t,s)=>`<h2>${t}</h2><p class="sub">${s}</p>`;
+function swim(d){
+ let top=26,L={};d.lanes.forEach(l=>{l.top=top;l.h=l.h||1;L[l.k]=l;top+=l.h*RH});
+ const nc=Math.max(...d.steps.map(s=>s[2]))+1,W=LW+nc*CW,P={};let h='';
+ (d.stages||[]).forEach(([t,a,b,c])=>h+=`<div class="stg" style="left:${LW+a*CW}px;width:${(b-a+1)*CW}px;background:${c}">${t}</div>`);
+ d.lanes.forEach(l=>h+=`<div class="lane ${l.c||l.k}" style="top:${l.top}px;height:${l.h*RH}px"><b>${l.n}</b></div>`);
+ d.steps.forEach(([id,lk,c,t,kd,s])=>{const l=L[lk],x=LW+c*CW+11,y=l.top+(s||0)*RH+20;P[id]={x,y,cx:x+BW/2,cy:y+BH/2};
+  const [a,...r]=t.split('\n'),tx=kd=='d'?`<i>${a}</i>`:`${a}${r.length?`<small>${r.join('<br>')}</small>`:''}`;
+  h+=`<div class="bx ${l.c||l.k} ${kd||''}" style="left:${x}px;top:${y}px">${tx}</div>`});
+ let sv='<defs><marker id="m" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="context-stroke"/></marker></defs>';
+ d.edges.forEach(([f,t,lb,st])=>{const A=P[f],B=P[t];let p,lx,ly;
+  if(st=='b'){const y=A.y+BH+16;p=`M${A.cx} ${A.y+BH}V${y}H${B.cx}V${B.y+BH}`;lx=(A.cx+B.cx)/2-20;ly=y-4}
+  else if(A.cx==B.cx){const dn=B.y>A.y;p=`M${A.cx} ${dn?A.y+BH:A.y}V${dn?B.y:B.y+BH}`;lx=A.cx+6;ly=(A.y+B.y)/2+(dn?BH/2:0)}
+  else if(A.y==B.y){p=`M${A.x+BW} ${A.cy}H${B.x}`;lx=A.x+BW+3;ly=A.cy-4}
+  else{const mx=B.x-14;p=`M${A.x+BW} ${A.cy}H${mx}V${B.cy}H${B.x}`;lx=A.x+BW+3;ly=A.cy-4}
+  const c=/^No|^Reject/.test(lb||'')?'#d64550':/^Yes/.test(lb||'')?'#2f9e4f':'#475569';
+  sv+=`<path d="${p}" fill="none" stroke="${c}" stroke-width="2" ${st=='b'||c=='#d64550'?'stroke-dasharray="5 4"':''} marker-end="url(#m)"/>`;
+  if(lb)sv+=`<text x="${lx}" y="${ly}" font-size="11" font-weight="700" fill="${c}">${lb}</text>`});
+ return `<div class="scr"><div class="sw" style="width:${W}px;height:${top}px">${h}<svg width="${W}" height="${top}">${sv}</svg></div></div>`}
+const SC={q:'#64748b',a:'#d64550',d:'#7e4fc7',f:'#2f9e4f'};
+const stg=(...a)=>[['Task / Request',...a[0],SC.q],['Admin approval',...a[1],SC.a],['Dispatch',...a[2],SC.d],['Final payment & proof',...a[3],SC.f]];
+const dispatchPanel=(fin)=>`<div class="pn"><h3>Request → Approval → Dispatch are three separate stages</h3>
+<div class="row" style="margin-bottom:12px"><span class="bd b">REQUEST: someone asks for money</span><span class="ar">→</span><span class="bd r">APPROVAL: Admin gives permission</span><span class="ar">→</span><span class="bd p">DISPATCH: money actually released</span></div>
+<div class="ch">${N('ADMIN APPROVED','adm')}${LN}${N('READY TO DISPATCH','','Only one dispatcher is needed')}${fk(`${N('ADMIN','adm')}${LN}${N('Dispatch payment','adm')}`,`${N('ACCOUNTANT','acc')}${LN}${N('Dispatch payment','acc')}`)}
+${mg('','')}${N('PAYMENT RELEASED','ok','Dispatched By = ADMIN or ACCOUNTANT')}${LN}${N('Transaction ID recorded')}${LN}${N('Proof uploaded')}${LN}${N(fin,'ok')}</div>
+<div class="callout"><b>Admin = Approval. Admin OR Accountant = Dispatch.</b> Admin and Accountant do NOT both approve. Accountant can never dispatch a request that Admin has not approved.</div></div>`;
+const reqF=(t,l)=>[t,l,'dh'];
+
+const F={};
+F.hier=()=>head('Organization Hierarchy','Who sits where and what each role is responsible for')+`<div class="pn"><div class="ch">
+<div class="cd f adm" style="width:300px"><h4>ADMIN</h4><ul><li>Full ERP control</li><li>Approve / Reject requests</li><li>Monitor payments</li><li>Can dispatch approved payments</li></ul></div>${LN}
+<div class="fk" style="max-width:900px"><div><div class="cd f acc" style="width:280px"><h4>ACCOUNTANT</h4><ul><li>Financial execution</li><li>Can dispatch approved payments</li><li>Record transactions</li><li>Upload payment proof</li></ul></div></div>
+<div><div class="cd f dh" style="width:300px"><h4>DEPARTMENT HEADS</h4><ul><li>Manage employees</li><li>Verify completed work</li><li>Create payment requests</li><li>Manage vendors / rentals</li><li>Pay employees</li></ul></div>${LN}
+<div class="row">${[1,2,3,4].map(i=>N('Head '+i,'dh')).join('')}</div>${LN}
+<div class="cd f emp" style="width:260px"><h4>EMPLOYEES</h4><ul><li>Receive task</li><li>Complete task</li><li>Submit proof</li><li>Receive payment</li></ul></div></div></div></div></div>`;
+
+const taskPay=`<div class="pn"><h3>Task status and payment status are separate</h3><div class="row"><div class="cd f dh"><h4>TASK STATUS</h4><ul><li>CREATED → ASSIGNED → ACCEPTED → IN PROGRESS</li><li>SUBMITTED → UNDER REVIEW → REJECTED / REVISION</li><li>COMPLETED → PAYMENT ELIGIBLE</li></ul></div><span class="ar">≠</span><div class="cd f adm"><h4>PAYMENT STATUS</h4><ul><li>PENDING ADMIN APPROVAL → ADMIN APPROVED</li><li>WAITING FOR DISPATCH → RELEASED → COMPLETED</li></ul></div></div><div class="callout">Example: Task = <b>COMPLETED</b> while Payment = <b>PENDING ADMIN APPROVAL</b>.</div></div>`;
+F.emp=()=>head('Employee Payment Flow','Starts from a VERIFIED, payment-eligible task (see Task Allocation) and ends when the employee is paid and proof is recorded')+swim({
+ stages:[['Eligible',0,0,SC.q],['Request',1,1,'#475569'],['Admin approval',2,4,SC.a],['Dispatch',5,6,SC.d],['Final payment & proof',7,11,SC.f]],
+ lanes:[{k:'emp',n:'EMPLOYEE'},{k:'dh',n:'DEPARTMENT HEAD'},{k:'adm',n:'ADMIN',h:2},{k:'acc',n:'ACCOUNTANT'},{k:'sys',n:'SYSTEM / LEDGER'}],
+ steps:[['a','sys',0,'VERIFIED TASK\nPAYMENT ELIGIBLE','k'],['f','dh',1,'Create payment request\nPENDING ADMIN APPROVAL','k'],['g','adm',2,'Review request'],['h','adm',3,'Approve?','d'],['i','adm',3,'REJECTED\nReason entered',0,1],['j','adm',4,'ADMIN APPROVED\nReady to dispatch','k'],['k','adm',5,'Admin dispatches'],['l','acc',5,'Accountant dispatches'],['m','acc',6,'FUNDS RELEASED\nTransaction ID recorded','k'],['n','dh',7,'Dept Head receives funds'],['o','dh',8,'Dept Head pays employee'],['p','emp',9,'Employee receives payment'],['q','dh',10,'Upload payment proof'],['r','sys',11,'COMPLETED\nLogged to event ledger','k']],
+ edges:[['a','f'],['f','g','Send'],['g','h'],['h','i','Reject'],['h','j','Yes'],['i','f','Modify & resubmit','b'],['j','k'],['j','l'],['k','m'],['l','m'],['m','n'],['n','o'],['o','p'],['p','q'],['q','r']]})
++cards([['Payment request contains',['Request ID, Employee, Department, Event','Task, task completion reference','Requested amount, supporting documents','Requested by, date · PENDING ADMIN APPROVAL'],'dh'],['Admin sees',['Employee, department, event, task','Requested amount, previous payments','Supporting documents, Department Head'],'adm'],['Transaction record (on dispatch)',['Transaction ID, amount, date, method','Source account, Dispatched By','Event, Request ID, payment proof'],'acc']])
++taskPay+dispatchPanel('COMPLETED (employee paid)')+`<div class="pn"><h3>Two separate transactions</h3><div class="row"><div class="cd f acc"><h4>1 · FUND RELEASE</h4><ul><li>Admin OR Accountant → Department Head</li></ul></div><span class="ar">then</span><div class="cd f dh"><h4>2 · FINAL EMPLOYEE PAYMENT</h4><ul><li>Department Head → Employee, proof uploaded</li></ul></div></div></div>`;
+
+
+F.mgmt=()=>head('Employee Management','An independent operational module. Creating an employee never creates a payment')+swim({
+ lanes:[{k:'adm',n:'ADMIN'},{k:'dh',n:'DEPARTMENT HEAD'},{k:'emp',n:'EMPLOYEE'},{k:'sys',n:'SYSTEM'}],
+ steps:[['a','adm',0,'Create employee'],['b','sys',1,'Employee profile\nID, contact, dept, bank'],['c','adm',2,'Assign Department Head'],['d','sys',3,'EMPLOYEE ACTIVE','k'],['e','dh',4,'Assign employee to event'],['f','emp',5,'Employee sees event'],['g','emp',6,'Receives tasks'],['h','sys',7,'Work / activity history'],['i','adm',8,'Status management\nActive · Inactive · Exit']],
+ edges:[['a','b'],['b','c'],['c','d'],['d','e'],['e','f'],['f','g'],['g','h'],['h','i']]})
++cards([['Employee record stores',['Employee ID, name, contact','Department, Department Head, designation','Joining date, employment status, payment / bank details','Documents, audit history'],'adm'],['Operational history',['Assigned events and tasks','Completed, pending and rejected tasks','Payment requests and payment history'],'emp']])
++`<div class="callout"><b>Employee creation does NOT automatically create a payment.</b> Payments start only from a verified, payment-eligible task.</div>`;
+
+F.task=()=>head('Task Allocation & Tracking','Every task belongs to an Event and an Employee; only verified tasks become payment eligible')+swim({
+ stages:[['Create & assign',0,4,SC.q],['Execution',5,7,'#2f6fd6'],['Verification',8,10,SC.f],['To payment',11,12,SC.a]],
+ lanes:[{k:'dh',n:'DEPARTMENT HEAD'},{k:'emp',n:'EMPLOYEE'},{k:'sys',n:'SYSTEM / EVENT LEDGER'}],
+ steps:[['a','sys',0,'Event requirement'],['b','dh',1,'Create task'],['c','sys',2,'Task ID + Event ID\nCREATED'],['d','dh',3,'Set description, priority, due date, hours, amount'],['e','dh',4,'Assign employee\nASSIGNED'],['f','emp',5,'Accept task\nACCEPTED'],['g','emp',6,'Work on task\nIN PROGRESS'],['h','emp',7,'Upload proof, submit\nSUBMITTED'],['i','dh',8,'Review task\nUNDER REVIEW'],['j','dh',9,'Task valid?','d'],['k','emp',9,'Return to employee\nREVISION'],['l','dh',10,'TASK COMPLETED','k'],['m','sys',11,'PAYMENT ELIGIBLE','k'],['n','dh',12,'Create payment request']],
+ edges:[['a','b'],['b','c'],['c','d'],['d','e'],['e','f'],['f','g'],['g','h'],['h','i'],['i','j'],['j','k','No'],['j','l','Yes'],['k','g','Resubmit','b'],['l','m'],['m','n']]})+taskPay;
+
+F.master=()=>head('Integrated Master Flow','Operations (people & tasks) and Financial Management run in parallel and meet only at payment eligibility')+swim({
+ stages:[['Operations',1,5,'#2f6fd6'],['Payment request & approval',6,9,SC.a],['Dispatch',10,11,SC.d],['Final payment & ledger',12,14,SC.f]],
+ lanes:[{k:'sys',n:'EVENT / PROJECT',c:'sys'},{k:'emp',n:'EMPLOYEE'},{k:'dh',n:'DEPARTMENT HEAD'},{k:'adm',n:'ADMIN',h:2},{k:'acc',n:'ACCOUNTANT'},{k:'cli',n:'FINANCIAL MANAGEMENT',c:'sys'}],
+ steps:[['a','sys',0,'EVENT / PROJECT','k'],['b','dh',1,'Create & assign task'],['c','emp',2,'Accept, work, submit proof'],['d','dh',3,'Verify task'],['e','dh',4,'Task valid?','d'],['f','emp',4,'Revision'],['g','dh',5,'TASK COMPLETED\nPAYMENT ELIGIBLE','k'],['h','dh',6,'Create employee payment request'],['i','adm',7,'Admin review'],['j','adm',8,'Approve?','d'],['k','adm',8,'REJECTED\nReturned',0,1],['l','adm',9,'READY FOR DISPATCH','k'],['m','adm',10,'Admin dispatch'],['n','acc',10,'Accountant dispatch'],['o','acc',11,'FUNDS RELEASED\nTxn ID','k'],['p','dh',12,'Receive funds, pay employee'],['q','emp',13,'Employee paid + proof'],['r','cli',14,'EVENT LEDGER → PROFIT / LOSS → COMPANY VIEW','k'],['s','cli',1,'Client revenue'],['t','cli',2,'Vendor, rental, other expenses'],['u','cli',3,'Internal fund transfer\n(not revenue)']],
+ edges:[['a','b'],['a','s'],['b','c'],['c','d'],['d','e'],['e','f','No'],['f','c','Resubmit','b'],['e','g','Yes'],['g','h'],['h','i'],['i','j'],['j','k','Reject'],['k','h','Return','b'],['j','l','Yes'],['l','m'],['l','n'],['m','o'],['n','o'],['o','p'],['p','q'],['q','r'],['s','t'],['t','u'],['u','r']]})
++`<div class="callout"><b>Two parallel branches:</b> Employee &amp; Task operations (top) and Financial Management (bottom). Vendor, rental and other expenses follow the same approval → dispatch rule as employee payments.</div>`
++`<div class="pn"><h3>Master data connection</h3><div class="ch">${N('CLIENT','cli')}${LN}${N('EVENT','sys')}${fk(`${N('DEPARTMENT')}${LN}${N('DEPARTMENT HEAD','dh')}${LN}${N('EMPLOYEE','emp')}${LN}${N('TASK')}${LN}${N('PAYMENT REQUEST','adm')}${LN}${N('TRANSACTION','acc')}`,N('FINANCIAL LEDGER','sys'))}</div></div>`
++`<div class="pn"><h3>Business relationships (not a database design)</h3><pre style="margin:0;overflow:auto;font-size:12.5px;line-height:1.35">Employee
+ ├─< Event Assignment
+ └─< Task ── Event
+        ├── Employee
+        ├── Verification
+        └── Payment Request
+              ├── Approval
+              ├── Dispatch
+              ├── Transaction
+              └── Proof
+
+Client revenue + Event expenses + Internal fund movement
+   → Event Financial Ledger → Event Profit / Loss</pre></div>`
++`<h3>What Admin monitors (sample data)</h3><div class="chips">${[['Active employees',42],['Active events',3],['Open tasks',57],['Completed tasks',212],['Pending payment requests',6],['Waiting for dispatch',3],['Employee payments','₹4,10,000'],['Vendor payments','₹3,20,000'],['Rental payments','₹1,40,000'],['Client revenue','₹10,50,000'],['Total expense','₹7,30,000'],['Company profit','₹3,20,000']].map(([a,b])=>`<div><b>${b}</b>${a}</div>`).join('')}</div>
+<div class="tw"><table><tr><th>Event</th><th>Revenue</th><th>Expenses</th><th>Profit</th></tr><tr><td>Event 1</td><td>₹6,00,000</td><td>₹4,20,000</td><td>₹1,80,000</td></tr><tr><td>Event 2</td><td>₹4,50,000</td><td>₹3,10,000</td><td>₹1,40,000</td></tr></table></div>`;
+
+
+const vrSteps=(a,b)=>[];
+F.ven=()=>head('Vendor Payment Flow','Vendor completes service; the request is raised by the Department Head / Manager')+swim({
+ stages:[['Service & request',0,2,SC.q],['Admin approval',3,5,SC.a],['Dispatch',6,7,SC.d],['Vendor paid & proof',8,10,SC.f]],
+ lanes:[{k:'ven',n:'VENDOR'},{k:'dh',n:'DEPT HEAD / MANAGER'},{k:'adm',n:'ADMIN',h:2},{k:'acc',n:'ACCOUNTANT'}],
+ steps:[['a','ven',0,'Service completed'],['b','dh',1,'Verify service'],['c','dh',2,'Create vendor payment request','k'],['d','adm',3,'Review contract, paid & balance'],['e','adm',4,'Approve?','d'],['f','adm',4,'REJECTED\nReason entered',0,1],['g','adm',5,'ADMIN APPROVED\nReady to dispatch','k'],['h','adm',6,'Admin dispatches'],['i','acc',6,'Accountant dispatches'],['j','acc',7,'PAYMENT RELEASED\nTransaction ID','k'],['k','ven',8,'Vendor receives payment'],['l','acc',9,'Proof recorded'],['m','acc',10,'COMPLETED','k']],
+ edges:[['a','b'],['b','c'],['c','d','Send'],['d','e'],['e','f','Reject'],['e','g','Yes'],['f','c','Modify & resubmit','b'],['g','h'],['g','i'],['h','j'],['i','j'],['j','k'],['k','l'],['l','m']]})
++cards([['Vendor request contains',['Vendor, Event','Contract amount, advance paid','Previous payments, current payment','Total paid, outstanding balance, documents'],'dh']])
++`<div class="pn"><h3>Vendor balance</h3><div class="row">${['CONTRACT VALUE','ADVANCE PAID','ADDITIONAL PAYMENTS','TOTAL PAID','OUTSTANDING BALANCE'].map(x=>N(x,'ven')).join('<span class="ar">→</span>')}</div>
+<div class="callout"><b>Outstanding Balance = Contract Amount − Total Paid</b> (recalculated after every payment)</div></div>`+dispatchPanel('COMPLETED (vendor paid)');
+
+F.ren=()=>head('Rental Payment Flow','Rental requirement is identified and requested by the Department Head / Manager')+swim({
+ stages:[['Rental setup & request',0,2,SC.q],['Admin approval',3,5,SC.a],['Dispatch',6,7,SC.d],['Provider paid & proof',8,10,SC.f]],
+ lanes:[{k:'dh',n:'DEPT HEAD / MANAGER'},{k:'adm',n:'ADMIN',h:2},{k:'acc',n:'ACCOUNTANT'},{k:'ren',n:'RENTAL PROVIDER'}],
+ steps:[['a','dh',0,'Identify requirement\nAdd rental item'],['b','dh',1,'Assign rental to event'],['c','dh',2,'Create rental payment request','k'],['d','adm',3,'Review request'],['e','adm',4,'Approve?','d'],['f','adm',4,'REJECTED\nReason entered',0,1],['g','adm',5,'ADMIN APPROVED\nReady to dispatch','k'],['h','adm',6,'Admin dispatches'],['i','acc',6,'Accountant dispatches'],['j','acc',7,'PAYMENT RELEASED\nTransaction ID','k'],['k','ren',8,'Provider receives payment'],['l','acc',9,'Transaction proof recorded'],['m','acc',10,'COMPLETED','k']],
+ edges:[['a','b'],['b','c'],['c','d','Send'],['d','e'],['e','f','Reject'],['e','g','Yes'],['f','c','Modify & resubmit','b'],['g','h'],['g','i'],['h','j'],['i','j'],['j','k'],['k','l'],['l','m']]})
++cards([['Rental record',['Rental item, Rental provider, Event','Start date, end date, quantity','Rate, total cost','Advance, balance, payment status'],'ren']])+dispatchPanel('COMPLETED (provider paid)');
+
+F.cli=()=>head('Client Revenue Flow','Money comes INTO the company: Client pays, Accountant records, Event revenue grows')+swim({
+ stages:[['Advance',0,3,SC.q],['Event delivery',4,5,SC.a],['Balance collection',6,8,SC.f]],
+ lanes:[{k:'cli',n:'CLIENT'},{k:'acc',n:'ACCOUNTANT'},{k:'sys',n:'EVENT LEDGER'}],
+ steps:[['a','cli',0,'Event contract signed'],['b','cli',1,'Advance payment'],['c','acc',2,'Record client payment'],['d','sys',3,'EVENT REVENUE\n(advance)','k'],['e','sys',4,'Event completed'],['f','sys',5,'Balance due'],['g','cli',6,'Balance payment'],['h','acc',7,'Record payment'],['i','sys',8,'EVENT FULLY COLLECTED','k']],
+ edges:[['a','b'],['b','c'],['c','d'],['d','e'],['e','f'],['f','g'],['g','h'],['h','i']]})
++cards([['Tracked per event',['Contract value','Advance received, balance due','Balance received, total received','Outstanding amount (always recalculated)'],'cli']])+`<div class="callout">Client payment → Accountant records → Event revenue → Company cash. No approval step is needed because money is received, not spent.</div>`;
+
+F.xfer=()=>head('Event-to-Event Fund Transfer','Event 1 temporarily funds Event 2. This is an Internal Fund Transfer, NOT revenue and NOT profit')+swim({
+ stages:[['Request',0,0,SC.q],['Admin approval',1,3,SC.a],['Dispatch',4,5,SC.d],['Event 2 uses funds',6,7,SC.f],['Settlement',8,10,SC.q]],
+ lanes:[{k:'dh',n:'REQUESTER',c:'dh'},{k:'adm',n:'ADMIN',h:2},{k:'acc',n:'ACCOUNTANT'},{k:'sys',n:'EVENTS'}],
+ steps:[['a','dh',0,'Create internal fund request','k'],['b','adm',1,'Review request'],['c','adm',2,'Approve?','d'],['d','adm',2,'REJECTED\nReason entered',0,1],['e','adm',3,'ADMIN APPROVED\nReady to dispatch','k'],['f','adm',4,'Admin dispatches'],['g','acc',4,'Accountant dispatches'],['h','acc',5,'TRANSFER RECORDED\nTransaction ID','k'],['i','sys',6,'Event 2 funded\n(working capital)','k'],['j','sys',7,'Event 2 pays its expenses'],['k','sys',8,'Event 2 receives client advance'],['l','sys',9,'Settle transfer back'],['m','sys',10,'Event 1 repaid','k']],
+ edges:[['a','b','Send'],['b','c'],['c','d','Reject'],['c','e','Yes'],['d','a','Modify & resubmit','b'],['e','f'],['e','g'],['f','h'],['g','h'],['h','i'],['i','j'],['j','k'],['k','l'],['l','m']]})
++`<div class="pn"><h3>Example</h3><div class="row">${N('EVENT 1','sys','Available funds ₹2,00,000')}<span class="ar">→ transfer ₹1,50,000 →</span>${N('EVENT 2','sys','Working capital ₹1,50,000')}</div>
+<div class="callout">Classified as <b>Internal Fund Transfer</b>, never as Revenue. Event 1 shows “Internal funds sent”; Event 2 shows “Internal funds received”.</div></div>`
++cards([['Transfer request',['Transfer ID, source event, destination event','Amount, reason','Requested by, date'],'dh'],['Settlement tracking',['Original transfer, amount','Settlement amount, settlement date','Remaining amount, settlement status'],'sys']]);
+
+const TR={Employee:[['EMP-001','Event 1','Head A','Ravi','₹15,000','02 Oct','Approved','Accountant','03 Oct','TXN-7781','Dispatched · Waiting for Final Payment'],['EMP-002','Event 2','Head B','Meena','₹8,500','04 Oct','Pending','','','','Pending Admin Approval'],['EMP-003','Event 1','Head A','Arun','₹6,000','01 Oct','Approved','','','','Waiting for Dispatch'],['EMP-004','Event 3','Head C','Priya','₹12,000','29 Sep','Rejected','','','','Rejected']],
+Vendor:[['VEN-002','Event 2','Manager X','Sound Co.','₹50,000','30 Sep','Approved','Admin','01 Oct','TXN-7702','Completed'],['VEN-003','Event 1','Manager Y','Decor Hub','₹75,000','05 Oct','Pending','','','','Pending Admin Approval'],['VEN-004','Event 3','Manager X','Caterer','₹1,20,000','03 Oct','Approved','Accountant','04 Oct','TXN-7790','Completed']],
+Rental:[['RNT-001','Event 2','Manager Y','Stage Rentals','₹40,000','02 Oct','Approved','Admin','03 Oct','TXN-7785','Dispatched · Waiting for Final Payment'],['RNT-002','Event 1','Manager X','Light Hire','₹22,000','05 Oct','Approved','','','','Waiting for Dispatch'],['RNT-003','Event 3','Manager Y','Tent House','₹18,000','06 Oct','Pending','','','','Pending Admin Approval']]};
+const bc=s=>s=='Completed'?'g':s=='Rejected'?'r':/Pending/.test(s)?'y':/Dispatched/.test(s)?'p':'b';
+function tracker(t){const R=TR[t],c=f=>R.filter(f).length;
+ const ch=[['Waiting for Admin',c(r=>r[6]=='Pending')],['Waiting for Dispatch',c(r=>r[6]=='Approved'&&!r[7])],['Dispatched by Admin',c(r=>r[7]=='Admin')],['Dispatched by Accountant',c(r=>r[7]=='Accountant')],['Waiting for Final Payment',c(r=>/Final/.test(r[10]))],['Completed',c(r=>r[10]=='Completed')]];
+ $('#tb').innerHTML=`<div class="chips">${ch.map(([a,b])=>`<div><b>${b}</b>${a}</div>`).join('')}</div><div class="tw"><table><tr>${['Request ID','Type','Event','Requester','Beneficiary','Amount','Request date','Admin approval','Dispatched by','Dispatch date','Transaction ID','Status'].map(h=>`<th>${h}</th>`).join('')}</tr>${R.map(r=>`<tr>${[r[0],t,...r.slice(1)].map((v,j)=>{const i=j-1;const x=j==1?v:i==6?`<span class="bd ${v=='Approved'?'g':v=='Rejected'?'r':'y'}">${v.toUpperCase()}</span>`:i==7&&v?`<span class="bd ${v=='Admin'?'r':'p'}">${v.toUpperCase()}</span>`:i==10?`<span class="bd ${bc(v)}">${v}</span>`:v||'—';return `<td>${x}</td>`}).join('')}</tr>`).join('')}</table></div>`;
+ document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.textContent==t))}
+window.tracker=tracker;
+const LIFE=['REQUEST CREATED','PENDING ADMIN APPROVAL','ADMIN APPROVED','WAITING FOR DISPATCH','DISPATCHED BY ADMIN or ACCOUNTANT','TRANSACTION RECORDED','PAYMENT PROOF UPLOADED','FINAL PAYMENT','COMPLETED'];
+F.trk=()=>head('Admin Payment Flow Tracker','Admin sees every payment and exactly who is holding it up (sample data)')+`<div class="tabs">${Object.keys(TR).map(t=>`<button onclick="tracker('${t}')">${t}</button>`).join('')}</div><div id="tb"></div>
+<div class="pn" style="margin-top:16px"><h3>Payment lifecycle</h3><div class="row">${LIFE.map((x,i)=>(i?'<span class="ar">→</span>':'')+`<span class="bd ${i==2?'r':i==4?'p':i==8?'g':'b'}">${x}</span>`).join('')}</div></div>`;
+F.trk.after=()=>tracker('Employee');
+
+F.evt=()=>head('Event Financial Flow','Every event has its own ledger; profit = revenue − expenses. Internal transfers are kept outside profit')+`<div class="grid">
+<div class="pn"><h3>Event ledger</h3><div class="ch" style="align-items:stretch;gap:6px">${N('EVENT','sys')}${N('CLIENT REVENUE','cli','Advance + Balance')}${N('EMPLOYEE EXPENSE','emp')}${N('VENDOR EXPENSE','ven')}${N('RENTAL EXPENSE','ren')}${N('OTHER EXPENSE','sys')}${N('INTERNAL FUNDS RECEIVED','','Not revenue')}${N('INTERNAL FUNDS SENT','','Not expense, not profit')}</div></div>
+<div class="pn"><h3>Profitability</h3><div class="ch">${N('EVENT REVENUE','cli','₹6,00,000')}${LN}${N('MINUS TOTAL EVENT EXPENSE','adm','Employee ₹1,20,000 + Vendor ₹2,00,000 + Rental ₹80,000 + Other ₹20,000 = ₹4,20,000')}${LN}${N('EVENT PROFIT / LOSS','ok','₹1,80,000')}</div>
+<div class="callout"><b>Event Profit = Event Revenue − Event Expenses</b><br>Internal funds sent/received are shown beside the ledger and never change profit.</div></div></div>`;
+
+F.co=()=>head('Company Financial Overview','All events combined')+`<div class="pn"><div class="ch">${N('ALL CLIENT PAYMENTS','cli')}${LN}${N('COMPANY CASH','sys')}${fk(`${N('EVENT EXPENSES','adm')}<div class="row" style="margin-top:8px">${['Employee','Vendor','Rental','Other'].map(x=>N(x,'sys')).join('')}</div>`,`${N('INTERNAL EVENT FUNDING','','Not revenue, not expense')}<div class="row" style="margin-top:8px">${['Event 1 → Event 2','Event 2 → Event 3','Event 3 → Event 1'].map(x=>N(x)).join('')}</div>`)}${mg('','')}${N('TOTAL COMPANY REVENUE','cli')}${LN}${N('TOTAL COMPANY EXPENSE','adm')}${LN}${N('COMPANY PROFIT / LOSS','ok')}</div></div>`;
+
+F.st=()=>head('Common Payment Status','One lifecycle shared by Employee, Vendor and Rental payments')+`<div class="pn"><div class="ch">${N('REQUEST CREATED')}${LN}${N('PENDING ADMIN APPROVAL','adm')}${LN}${N('ADMIN APPROVED','adm')}${LN}${N('WAITING FOR DISPATCH')}${fk(N('ADMIN DISPATCHED','adm'),N('ACCOUNTANT DISPATCHED','acc'))}${mg('','')}${N('PAYMENT RELEASED','acc')}${LN}${N('TRANSACTION ID RECORDED')}${LN}${N('PAYMENT PROOF UPLOADED')}${LN}${N('FINAL BENEFICIARY PAYMENT','','Employee via Dept Head · Vendor · Rental provider')}${LN}${N('COMPLETED','ok')}</div>
+<h3 style="margin-top:18px">Exception states</h3><div class="row">${['REJECTED','RETURNED','ON HOLD','CANCELLED'].map(x=>`<span class="bd r">${x}</span>`).join('')}</div></div>`;
+
+F.rul=()=>head('Business Rules','The rules every flow must follow')+[['Employee / Task',['Admin creates and maintains employee master records.','Department Head assigns employees to departments/events.','Every task belongs to an Event/Project.','Department Head creates and assigns tasks.','Employee accepts and executes tasks.','Employee submits completion proof.','Department Head verifies task completion.','Rejected tasks return to the Employee for correction.','Task status and payment status are separate.','Only verified payment-eligible tasks generate employee payment requests.']],['Payment',['Department Head creates employee payment requests.','Department Head / Manager creates vendor payment requests.','Department Head / Manager creates rental payment requests.','Admin approval is mandatory.','Accountant cannot dispatch an unapproved request.','After Admin approval, Admin can dispatch.','After Admin approval, Accountant can dispatch.','The system records who dispatched the payment.','Every payment must have a transaction ID.','Every payment should have supporting proof.','Employee final payment is made by the Department Head after fund release.']],['Financial',['Every transaction is linked to an Event whenever applicable.','Client outstanding balance is continuously calculated.','Vendor outstanding balance is continuously calculated.','Internal event-to-event transfers are NOT revenue.','Internal event-to-event transfers are NOT profit.','Event profit = Event Revenue − Event Expenses.','Internal transfers are displayed separately from event revenue/expenses.']]].map(([t,l])=>`<h3>${t}</h3><div class="rules" style="margin-bottom:14px">${l.map(r=>`<div>${r}</div>`).join('')}</div>`).join('').replace(/counter-reset/,'');
+
+F.aud=()=>head('Audit Trail','Every action leaves a log entry')+`<div class="pn"><div class="ch">${['USER ACTION','EMPLOYEE / TASK / REQUEST / TRANSACTION','APPROVAL','DISPATCH','TRANSACTION ID','PROOF','STATUS CHANGE'].map(x=>N(x)+LN).join('')}${N('AUDIT LOG','ok')}</div></div>`+cards([['Audit information',['User, Role, Action','Event ID, Task ID, Request ID, Amount','Old status, New status','Transaction ID, Timestamp, Document, Reason']]]);
+
+const MENU=[['MASTER FLOW'],['Integrated Master Flow','master'],['ORGANIZATION'],['Organization Hierarchy','hier'],['EMPLOYEE & TASK'],['Employee Management','mgmt'],['Task Allocation & Tracking','task'],['PAYMENTS'],['Employee Payment Flow','emp'],['Vendor Payment Flow','ven'],['Rental Payment Flow','ren'],['REVENUE & FUNDS'],['Client Revenue Flow','cli'],['Event-to-Event Fund Transfer','xfer'],['MONITORING'],['Admin Payment Flow Tracker','trk'],['FINANCE'],['Event Financial Flow','evt'],['Company Financial Overview','co'],['GOVERNANCE'],['Common Payment Status','st'],['Business Rules','rul'],['Audit Trail','aud']];
+let _n=0;MENU.forEach(([n,k])=>{if(!k){const h=document.createElement('div');h.textContent=n;h.style.cssText='font-size:11px;font-weight:700;color:#64748b;margin:10px 4px 4px';$('#nav').appendChild(h);return}const b=document.createElement('button');b.textContent=(++_n)+'. '+n;b.onclick=()=>show(k,b);$('#nav').appendChild(b)});
+function show(k,b){document.querySelectorAll('nav button').forEach(x=>x.classList.remove('on'));b.classList.add('on');$('#area').innerHTML=F[k]();if(F[k].after)F[k].after();$('#area').scrollTop=0;window.scrollTo(0,0)}
+show('master',$('nav button'));
+</script></body></html>
